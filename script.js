@@ -56,8 +56,7 @@ const labelRenderer = createLabelRenderer();
 
 const loader = new GLTFLoader();
 async function loadModel() {
-    const gltf = await loader.loadAsync("/heart.glb");
-
+    const gltf = await loader.loadAsync(`${import.meta.env.BASE_URL}heart.glb`);
     scene.add(gltf.scene);
 
     gltf.scene.traverse((child) => {
@@ -66,10 +65,6 @@ async function loadModel() {
 }
 
 loadModel();
-
-const dracoLoader = new DRACOLoader();
-dracoLoader.setDecoderPath("/examples/jsm/libs/draco/");
-loader.setDRACOLoader(dracoLoader);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);

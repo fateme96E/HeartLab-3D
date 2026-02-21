@@ -62,6 +62,9 @@ async function loadModel() {
     gltf.scene.traverse((child) => {
         if (child.isMesh) heartMeshes.push(child);
     });
+
+    const loadingDiv = document.getElementById('loading');
+    if (loadingDiv) loadingDiv.style.display = 'none';
 }
 
 loadModel();

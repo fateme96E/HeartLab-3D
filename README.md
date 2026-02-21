@@ -31,15 +31,14 @@
 
 
 ## About The Project
-This project is an interactive visualization tool used for exploring human heart. It has real-time rendering, and is designed for intuitive learning for ordinary people. 
+HeartLab 3D is an interactive tool to explore the human heart in real-time, designed for intuitive learning.
 Features:
-* You can zoom and explore inside of the heart
-* Rotating is available
-* Simple explanation is provided for the parts
-* The blood pathway is written for each section
-* Cardiac parts are colored based on their function(??)
+* Zoom and explore inside the heart
+* Rotate freely to view all angles
+* Simple explanations for each part
+* Blood pathway shown for each section
+* Cardiac parts color-coded by function
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Built With
 This section should list any major frameworks/libraries used in this project. 
@@ -49,11 +48,18 @@ This section should list any major frameworks/libraries used in this project.
 * [![CSS3][CSS3]][CSS3-url]
 * [![HTML5][HTML5]][HTML5-url]
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ### Preview
+<div align="center">
+    <img src="assets/preview.gif" alt="preview-gif" width="auto" height="auto">
+</div>
 
+### View Demo
+<a href="https://heart-lab-3d.netlify.app/">
+    <p>Click below to explore the 3D heart!</p>
+</a> 
 
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 

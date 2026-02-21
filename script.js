@@ -28,41 +28,60 @@ const interactiveMeshes = [
 let hoveredMesh = null;
 let selectedMesh = null;
 let currentLabel = null; 
+let heartMeshes = [];
 const selectedMeshRef = { current: selectedMesh };
 
+
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 0.1, 1000 );
 const rayCaster = new THREE.Raycaster();
 let mousePointer = new THREE.Vector2();
 scene.background = new THREE.Color(0xE3E3E3);
 
-const renderer = new THREE.WebGLRenderer();
+const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize( window.innerWidth, window.innerHeight );
+renderer.setPixelRatio( window.devicePixelRatio );
+renderer.physicallyCorrectLights = true;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+const pmremGenerator = new THREE.PMREMGenerator(renderer);
+pmremGenerator.compileEquirectangularShader();
 document.body.appendChild( renderer.domElement );
 
 const labelRenderer = createLabelRenderer();
 
-let heartMeshes = [];
 const loader = new GLTFLoader();
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath( '/examples/jsm/libs/draco/' );
 loader.setDRACOLoader( dracoLoader );
-const gltf = await loader.loadAsync( 'heart.glb' );
+
+const gltf = await loader.loadAsync( 'save.glb' );
 
 gltf.scene.traverse((child) => {
     if (child.isMesh) heartMeshes.push(child)
 });
 scene.add( gltf.scene );
 
-
-const ambientLight = new THREE.AmbientLight()
-ambientLight.color = new THREE.Color(0xffffff)
-ambientLight.intensity = 1
+const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight)
 
-const directionalLight = new THREE.DirectionalLight(0xF29683, 0.9)
-scene.add(directionalLight)
-directionalLight.position.set(1, 0.25, 0)
+const fillLight = new THREE.DirectionalLight(0xF29683, 1.3)
+scene.add(fillLight)
+fillLight.position.set(0, 5, -10);
+
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 1);
+hemiLight.position.set(0, 1, 0);
+scene.add(hemiLight);
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 1);
+keyLight.position.set(5, 5, 5);
+scene.add(keyLight);
+
+const rimLight = new THREE.DirectionalLight(0xffffff, 0.6);
+rimLight.position.set(0, 3, -6);
+scene.add(rimLight);
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping; 
+renderer.toneMappingExposure = 1.4;
 
 const controls = new OrbitControls( camera, renderer.domElement );
 camera.position.set( 0, 0, 2 );
@@ -130,7 +149,6 @@ function onMouseMove(event) {
 
 function animate() {
     controls.update();
-
 
     renderer.render(scene, camera);  
     labelRenderer.render(scene, camera);    

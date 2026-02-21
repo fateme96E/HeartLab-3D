@@ -18,13 +18,13 @@
             <a href="#about-the-project">About The Project</a>
         </li>
         <li>
-            <a href="#about-the-project">Built With</a>
+            <a href="#built-with">Built With</a>
         </li>
         <li>
-            <a href="#about-the-project">Preview</a>
+            <a href="#preview">Preview</a>
         </li>
         <li>
-            <a href="#about-the-project">View Demo</a>
+            <a href="#view-demo">View Demo</a>
         </li>
     </ol>
 </details>

@@ -1,29 +1,25 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import {
-  getMouseVector2,
-  checkRayIntersections,
-} from "./helpers/RayCastHelper";
+import { getMouseVector2, checkRayIntersections } from "./helpers/RayCastHelper";
 import { getMeshColor } from "./helpers/ColorsHelper";
-import { Messages } from "./constants";
 import { createLabelRenderer, HideLabel, showLabel } from "./helpers/LabelBox";
+import { Messages } from "./constants";
 
 const HOVER_INTENSITY = 0.3;
 const CLICK_INTENSITY = 0.8;
 
 const interactiveMeshes = [
-  "aorta",
-  "apex",
-  "right_atrium",
-  "left_atrium",
-  "right_ventricle",
-  "left_ventricle",
-  "superior_vena_cava",
-  "pulmonary_trunk",
-  "right_pulmonary_artery",
-  "left_pulmonary_artery",
+    "aorta",
+    "apex",
+    "right_atrium",
+    "left_atrium",
+    "right_ventricle",
+    "left_ventricle",
+    "superior_vena_cava",
+    "pulmonary_trunk",
+    "right_pulmonary_artery",
+    "left_pulmonary_artery",
 ];
 
 let hoveredMesh = null;
@@ -33,12 +29,7 @@ let heartMeshes = [];
 const selectedMeshRef = { current: selectedMesh };
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  50,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
+const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.1, 1000);
 const rayCaster = new THREE.Raycaster();
 let mousePointer = new THREE.Vector2();
 scene.background = new THREE.Color(0xe3e3e3);
@@ -67,9 +58,8 @@ loader.load(`${import.meta.env.BASE_URL}heart.glb`,
         if (loadingDiv) loadingDiv.style.display = 'none';
     },
     (xhr) => {
-        const percent = Math.round((xhr.loaded / xhr.total) * 100);
-        const loadingText = document.getElementById('loading-text');
-        if (loadingText) loadingText.textContent = `${percent} %`;
+        const percent = Math.min(Math.round((xhr.loaded / xhr.total) * 100), 100);
+        document.getElementById("loading-text").textContent = `Loading ${percent}%`;
     },
     (err) => {
         console.error('Error loading GLB:', err);
@@ -104,41 +94,28 @@ controls.enableDamping = true;
 controls.update();
 
 function onClick(event) {
-  mousePointer = getMouseVector2(event, renderer);
-  const intersect = checkRayIntersections(
-    mousePointer,
-    camera,
-    rayCaster,
-    heartMeshes
-  );
+    mousePointer = getMouseVector2(event, renderer);
+    const intersect = checkRayIntersections( mousePointer, camera, rayCaster, heartMeshes );
 
-  if (intersect) {
-    const intersectedObject = intersect.object;
+    if (intersect) {
+        const intersectedObject = intersect.object;
 
-    if (selectedMeshRef.current !== intersectedObject) {
-      if (selectedMeshRef.current) {
-        selectedMeshRef.current.material.emissive.set(0x000000);
-      }
+        if (selectedMeshRef.current !== intersectedObject) {
+            if (selectedMeshRef.current) {
+                selectedMeshRef.current.material.emissive.set(0x000000);
+            }
 
-      selectedMeshRef.current = intersectedObject;
-      selectedMeshRef.current.material.emissive.set(
-        getMeshColor(intersectedObject.name)
-      );
-      selectedMeshRef.current.material.emissiveIntensity = CLICK_INTENSITY;
+            selectedMeshRef.current = intersectedObject;
+            selectedMeshRef.current.material.emissive.set( getMeshColor(intersectedObject.name));
+            selectedMeshRef.current.material.emissiveIntensity = CLICK_INTENSITY;
 
-      if (interactiveMeshes.includes(intersectedObject.name)) {
-        currentLabel = showLabel(
-          scene,
-          intersect,
-          currentLabel,
-          Messages,
-          selectedMeshRef
-        );
-      } else {
-        currentLabel = HideLabel(currentLabel);
-      }
+            if (interactiveMeshes.includes(intersectedObject.name)) {
+                currentLabel = showLabel( scene, intersect, currentLabel, Messages, selectedMeshRef );
+            } else {
+                currentLabel = HideLabel(currentLabel);
+            }
+        }
     }
-  }
 }
 
 window.addEventListener("click", onClick);
@@ -146,45 +123,40 @@ window.addEventListener("click", onClick);
 document.addEventListener("mousemove", onMouseMove, false);
 
 function onMouseMove(event) {
-  camera.updateMatrixWorld();
-  mousePointer = getMouseVector2(event, renderer);
-  const intersections = checkRayIntersections(
-    mousePointer,
-    camera,
-    rayCaster,
-    heartMeshes
-  );
+    camera.updateMatrixWorld();
+    mousePointer = getMouseVector2(event, renderer);
+    const intersections = checkRayIntersections( mousePointer, camera, rayCaster, heartMeshes );
 
-  if (intersections) {
-    const intersected = intersections.object;
+    if (intersections) {
+        const intersected = intersections.object;
 
-    if (hoveredMesh !== intersected) {
-      if (hoveredMesh && hoveredMesh !== selectedMeshRef.current) {
-        hoveredMesh.material.emissive.set(0x000000);
-      }
+        if (hoveredMesh !== intersected) {
+            if (hoveredMesh && hoveredMesh !== selectedMeshRef.current) {
+                hoveredMesh.material.emissive.set(0x000000);
+            }
 
-      hoveredMesh = intersected;
-      document.body.style.cursor = interactiveMeshes.includes(hoveredMesh.name)
-        ? "pointer"
-        : "default";
-      if (hoveredMesh !== selectedMeshRef.current) {
-        hoveredMesh.material.emissive.set(getMeshColor(hoveredMesh.name));
-        hoveredMesh.material.emissiveIntensity = HOVER_INTENSITY;
-      }
+            hoveredMesh = intersected;
+            document.body.style.cursor = interactiveMeshes.includes(hoveredMesh.name)
+                ? "pointer"
+                : "default";
+            if (hoveredMesh !== selectedMeshRef.current) {
+                hoveredMesh.material.emissive.set(getMeshColor(hoveredMesh.name));
+                hoveredMesh.material.emissiveIntensity = HOVER_INTENSITY;
+            }
+        }
+    } else {
+            if (hoveredMesh && hoveredMesh !== selectedMeshRef.current) {
+            hoveredMesh.material.emissive.set(0x000000);
+            hoveredMesh = null;
+            document.body.style.cursor = "default";
+        }
     }
-  } else {
-    if (hoveredMesh && hoveredMesh !== selectedMeshRef.current) {
-      hoveredMesh.material.emissive.set(0x000000);
-      hoveredMesh = null;
-      document.body.style.cursor = "default";
-    }
-  }
 }
 
 function animate() {
-  controls.update();
+    controls.update();
 
-  renderer.render(scene, camera);
-  labelRenderer.render(scene, camera);
+    renderer.render(scene, camera);
+    labelRenderer.render(scene, camera);
 }
 renderer.setAnimationLoop(animate);

@@ -9,12 +9,19 @@
     <meta property="og:type" content="website">
     <meta name="author" content="Fateme Esmaili">
 
+    <link rel="icon" href="./assets/heart-anatomy-3d.png" type="image/png">
+    <link rel="icon" href="./assets/heart-anatomy-3d.webp" type="image/webp">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="HeartLab 3D | Cardiac Explorer">
+    <meta property="og:description" content="Explore the human heart in an interactive 3D environment.">
+    <meta property="og:image" content="https://heart-lab-3d.netlify.app/assets/heart-anatomy-3d.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    
     <title>HeartLab 3D | Cardiac Explorer</title>
     
 </head>
 <body>
-    <script type="module" src="./script.js"></script>
-    <div id="explore-hint">click and explore!</div>
     <div id="loading" class="container">
         <div class="loading-spinner">
             <div class="spinner">
@@ -23,5 +30,7 @@
         </div>
         <span id="loading-text" style="font-size:18px;">Loading 0%</span>
     </div>
+    <div id="explore-hint" style="display:none;">click and explore!</div>
+    <script type="module" src="./script.js"></script>
 </body>
 </html>

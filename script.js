@@ -56,7 +56,10 @@ loader.load(`${import.meta.env.BASE_URL}heart.glb`,
         });
   
         const loadingDiv = document.getElementById('loading');
+        const exploreHint = document.getElementById('explore-hint');
         if (loadingDiv) loadingDiv.style.display = 'none';
+        exploreHint.style.display = 'block';
+
     },
     (xhr) => {
         const percent = Math.min(Math.round((xhr.loaded / xhr.total) * 100), 100);

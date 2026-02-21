@@ -20,6 +20,13 @@ body, canvas {
     font-family: sans-serif;
     pointer-events: none;  
     z-index: 1000;        
+    display: none;
+}
+
+@media (max-width: 480px) {
+    #explore-hint {
+        font-size: 16px; 
+    }
 }
 
 .container {

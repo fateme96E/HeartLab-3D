@@ -41,7 +41,6 @@ Features:
 
 
 ### Built With
-This section should list any major frameworks/libraries used in this project. 
 * [![Three.js][Threejs]][Threejs-url]
 * [![Vite][Vite]][Vite-url]
 * [![JavaScript][JavaScript]][JavaScript-url]

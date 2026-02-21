@@ -90,7 +90,8 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.4;
 
 const controls = new OrbitControls(camera, renderer.domElement);
-camera.position.set(0, 0, 2);
+if (window.innerWidth <= 480) camera.position.set(0.7, 0.3, 3) 
+else camera.position.set(0.7, 0.3, 2);
 controls.enableDamping = true;
 controls.update();
 

@@ -10,6 +10,18 @@ body, canvas {
     touch-action: none;      
 }
 
+#explore-hint {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;      
+    color: rgba(0, 0, 0, 0.4); 
+    font-family: sans-serif;
+    pointer-events: none;  
+    z-index: 1000;        
+}
+
 .container {
     position: fixed;
     top:0; left:0; right:0; bottom:0;

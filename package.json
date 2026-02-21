@@ -1,26 +1,20 @@
 {
-  "name": "heartlab-3d",
-  "version": "1.0.0",
-  "description": "HeartLab 3D is an interactive 3D cardiac visualization tool built with Three.js",
-  "homepage": "https://fateme96E.github.io/HeartLab-3D",
-  "main": "index.js",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "build:gh": "cross-env DEPLOY_ENV=GH_PAGES vite build",
-    "preview": "vite preview",
-    "predeploy": "npm run build:gh",
-    "deploy": "gh-pages -d dist"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "three": "^0.182.0",
-    "vite": "^7.3.1"
-  },
-  "devDependencies": {
-    "cross-env": "^10.1.0",
-    "gh-pages": "^6.3.0"
-  }
+    "name": "heartlab-3d",
+    "version": "1.0.0",
+    "description": "HeartLab 3D is an interactive 3D cardiac visualization tool built with Three.js",
+    "main": "index.js",
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "three": "^0.182.0",
+      "vite": "^7.3.1"
+    },
+    "devDependencies": {
+    }
 }

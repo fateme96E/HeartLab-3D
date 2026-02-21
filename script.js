@@ -55,19 +55,26 @@ document.body.appendChild(renderer.domElement);
 const labelRenderer = createLabelRenderer();
 
 const loader = new GLTFLoader();
-async function loadModel() {
-    const gltf = await loader.loadAsync(`${import.meta.env.BASE_URL}heart.glb`);
-    scene.add(gltf.scene);
-
-    gltf.scene.traverse((child) => {
-        if (child.isMesh) heartMeshes.push(child);
-    });
-
-    const loadingDiv = document.getElementById('loading');
-    if (loadingDiv) loadingDiv.style.display = 'none';
-}
-
-loadModel();
+loader.load(`${import.meta.env.BASE_URL}heart.glb`, 
+    (gltf) => {
+        scene.add(gltf.scene);
+  
+        gltf.scene.traverse((child) => {
+            if (child.isMesh) heartMeshes.push(child);
+        });
+  
+        const loadingDiv = document.getElementById('loading');
+        if (loadingDiv) loadingDiv.style.display = 'none';
+    },
+    (xhr) => {
+        const percent = Math.round((xhr.loaded / xhr.total) * 100);
+        const loadingText = document.getElementById('loading-text');
+        if (loadingText) loadingText.textContent = `${percent} %`;
+    },
+    (err) => {
+        console.error('Error loading GLB:', err);
+    }
+);
 
 const ambientLight = new THREE.AmbientLight(0xffffff, 1);
 scene.add(ambientLight);

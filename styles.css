@@ -2,13 +2,68 @@ body {
     background-color: #E3E3E3;
 }
 
-#info_box {
-    background-color: #ffffff;
-    color: #000000;
-    font-size: 14px;
-    border-radius: 5px;
-    position: absolute;
-    display: none;
-    padding: 5px 10px;
-    width: max-content;
+.container {
+    position: fixed;
+    top:0; left:0; right:0; bottom:0;
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content:center;
+    background-color:#e3e3e3;
+    z-index:9999;
 }
+
+@keyframes spinner {
+    0% { transform: scale(.85) }
+    5% { transform: scale(1) }
+   39% { transform: scale(.75) }
+   45% { transform: scale(.9) }
+   60% { transform: scale(.85) }
+  100% { transform: scale(.8) }
+}
+.spinner > div {
+    animation: spinner 1.724s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+    transform-origin: 100px 100px;
+}
+.spinner > div div {
+    top: 74.8px;
+    left: 64px;
+    position: absolute;
+    width: 72px;
+    height: 72px;
+    background: #e90c59;
+    transform: rotate(45deg);
+}
+.spinner > div div:after, .spinner > div div:before {
+    content: " ";
+    position: absolute;
+    display: block;
+    width: 72px;
+    height: 72px;
+    background: #e90c59;
+}
+.spinner > div div:before {
+    left: -46.8px;
+    border-radius: 50% 0 0 50%;
+}
+.spinner > div div:after {
+    top: -46.8px;
+    border-radius: 50% 50% 0 0;
+} 
+.loading-spinner {
+    width: 200px;
+    height: 200px;
+    display: inline-block;
+    overflow: hidden;
+    background: none;
+}
+.spinner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform: translateZ(0) scale(1);
+    backface-visibility: hidden;
+    transform-origin: 0 0;
+}
+
+.spinner div { box-sizing: content-box; }

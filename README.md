@@ -32,6 +32,7 @@
 
 ## About The Project
 HeartLab 3D is an interactive tool to explore the human heart in real-time, designed for intuitive learning.
+
 Features:
 * Zoom and explore inside the heart
 * Rotate freely to view all angles

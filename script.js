@@ -94,6 +94,41 @@ camera.position.set(0, 0, 2);
 controls.enableDamping = true;
 controls.update();
 
+function onTouchStart(event) {
+    event.preventDefault(); 
+
+    const touch = event.touches[0];
+    const fakeEvent = {
+        clientX: touch.clientX,
+        clientY: touch.clientY
+    };
+    const mousePointer = getMouseVector2(fakeEvent, renderer);
+
+    const intersect = checkRayIntersections(mousePointer, camera, rayCaster, heartMeshes);
+
+    if (intersect) {
+        const intersectedObject = intersect.object;
+
+        if (selectedMeshRef.current !== intersectedObject) {
+            if (selectedMeshRef.current) {
+                selectedMeshRef.current.material.emissive.set(0x000000);
+            }
+
+            selectedMeshRef.current = intersectedObject;
+            selectedMeshRef.current.material.emissive.set(getMeshColor(intersectedObject.name));
+            selectedMeshRef.current.material.emissiveIntensity = CLICK_INTENSITY;
+
+            if (interactiveMeshes.includes(intersectedObject.name)) {
+                currentLabel = showLabel(scene, intersect, currentLabel, Messages, selectedMeshRef);
+            } else {
+                currentLabel = HideLabel(currentLabel);
+            }
+        }
+    }
+}
+
+renderer.domElement.addEventListener("touchstart", onTouchStart, false);
+
 function onClick(event) {
     mousePointer = getMouseVector2(event, renderer);
     const intersect = checkRayIntersections( mousePointer, camera, rayCaster, heartMeshes );

@@ -2,6 +2,14 @@ body {
     background-color: #E3E3E3;
 }
 
+body, canvas {
+    -webkit-user-select: none; 
+    -moz-user-select: none;    
+    -ms-user-select: none;    
+    user-select: none;       
+    touch-action: none;      
+}
+
 .container {
     position: fixed;
     top:0; left:0; right:0; bottom:0;
